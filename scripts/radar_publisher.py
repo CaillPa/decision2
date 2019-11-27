@@ -13,31 +13,23 @@ ser = None
 
 def run_test(publisher):
     global ser
-    rospy.loginfo("writing 'P'")
+    rospy.logdebug("writing 'P'")
     ser.write('P')
-    rospy.loginfo("wrote 'P'")
+    rospy.logdebug("wrote 'P'")
     ser.readline()
     while ser.is_open and not rospy.is_shutdown():
-        rospy.loginfo("writing 'L'")
+        rospy.logdebug("writing 'L'")
         ser.write('L')
         msg = str(ser.readline()).strip()
-        rospy.loginfo('received: '+msg)
+        rospy.logdebug('received: '+msg)
         publisher.publish(msg)
         time.sleep(1)
 
-"""
-def run(publisher):
-    global ser
-    ser.readline()
-    while ser.is_open and not rospy.is_shutdown():
-        msg = str(ser.readline()).strip()
-        rospy.loginfo(msg)
-        publisher.publish(msg)
-"""
-
 def resetUSB():
+    rospy.logwarn('resetting radar USB')
     os.system('echo cerema|sudo -S /home/pi/catkin_ws/src/decision2/misc/reset_usb.py search PL2303')
     time.sleep(5)
+    rospy.logwarn('done resetting radar USB')
     pass
 
 def talker():
@@ -51,7 +43,7 @@ def talker():
             rospy.loginfo("Serial connection successful")
             run_test(pub)
         except IOError:
-            rospy.loginfo("IOError, resetting USB")
+            rospy.logerr("IOError, resetting USB")
             resetUSB()
         finally:
             if ser:

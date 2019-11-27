@@ -12,18 +12,12 @@ REC_DURATION = 1
 TIMESTAMP = ""
 OUTPUT_DIR = "/media/usb/videos/"
 
-"""
-    lire la video sur le flux IP
-    subscribe au topic de la date
-    overlay la date sur la video
-    record la video sur un support amovible
-"""
-
 def callback(data):
     global TIMESTAMP
     TIMESTAMP = data.data
 
 def reset_usb():
+    rospy.loginfo('mounting USB drive')
     os.system('echo cerema|sudo -S mount -a')
 
 def draw_text(img, text):
@@ -73,10 +67,12 @@ def recorder():
 
 if __name__ == '__main__':
     if not os.path.exists('/dev/sda'):
-        rospy.loginfo('Storage device not plugged!')
+        rospy.logfatal('Storage device not plugged!')
+        rospy.logfatal('Exiting node ...')
         sys.exit(0)
     reset_usb()
     try:
+        rospy.logingo('creating output dir:'+OUTPUT_DIR)
         os.mkdir(OUTPUT_DIR)
     except:
         pass

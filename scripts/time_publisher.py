@@ -21,6 +21,7 @@ DATETIME_FORMAT = '%Y-%m-%d_%H-%M-%S'
 def talker():
     pub = rospy.Publisher('nmea_time', String, queue_size=10)
     rospy.init_node('nmea_publisher', anonymous=True)
+    rospy.loginfo('starting GPS serial communication')
     with serial.Serial(DEVICE, baudrate = BAUDRATE, timeout = TIMEOUT) as ser:
         while not rospy.is_shutdown():
             message = ser.readline()
@@ -41,8 +42,9 @@ def talker():
                 
                 # publish the time as a string
                 fr_time = gps_datetime.astimezone(fr_zone).strftime(DATETIME_FORMAT)
-                rospy.loginfo(fr_time)
+                rospy.logdebug(fr_time)
                 pub.publish(fr_time)
+        rospy.loginfo('quitting GPS node')
 
 if __name__ == '__main__':
     try:
