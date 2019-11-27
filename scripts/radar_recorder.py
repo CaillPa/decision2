@@ -1,9 +1,14 @@
 #!/usr/bin/python
+import os
+import sys
 import rospy
 from std_msgs.msg import String
 
 TIMESTAMP = ""
 OUT_FILE = None
+
+def mount_usb():
+    os.system('echo cerema|sudo -S mount -a')
 
 def time_callback(data):
     global TIMESTAMP
@@ -26,6 +31,10 @@ def record():
 
 
 if __name__ == '__main__':
+    if not os.path.exists('/dev/sda'):
+        rospy.loginfo('Storage device not plugged!')
+        sys.exit(0)
+    mount_usb()
     try:
         record()
     except rospy.ROSInterruptException:

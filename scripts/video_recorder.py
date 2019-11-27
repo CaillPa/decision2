@@ -1,5 +1,7 @@
 #!/usr/bin/python
+import os
 import cv2
+import sys
 import rospy
 from std_msgs.msg import String
 
@@ -8,7 +10,7 @@ VIDEO_FPS = 30
 VIDEO_RES = (640,480)
 REC_DURATION = 1
 TIMESTAMP = ""
-OUTPUT_DIR = "/media/usb/"
+OUTPUT_DIR = "/media/usb/videos/"
 
 """
     lire la video sur le flux IP
@@ -20,6 +22,9 @@ OUTPUT_DIR = "/media/usb/"
 def callback(data):
     global TIMESTAMP
     TIMESTAMP = data.data
+
+def reset_usb():
+    os.system('echo cerema|sudo -S mount -a')
 
 def draw_text(img, text):
     font = cv2.FONT_HERSHEY_SIMPLEX
@@ -67,6 +72,14 @@ def recorder():
     pass
 
 if __name__ == '__main__':
+    if not os.path.exists('/dev/sda'):
+        rospy.loginfo('Storage device not plugged!')
+        sys.exit(0)
+    reset_usb()
+    try:
+        os.mkdir(OUTPUT_DIR)
+    except:
+        pass
     try:
         recorder()
     except rospy.ROSInterruptException:

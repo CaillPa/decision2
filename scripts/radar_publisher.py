@@ -36,7 +36,7 @@ def run(publisher):
 """
 
 def resetUSB():
-    os.system('echo paul|sudo -S /home/pi/catkin_ws/src/decision2/misc/reset_usb.py search PL2303')
+    os.system('echo cerema|sudo -S /home/pi/catkin_ws/src/decision2/misc/reset_usb.py search PL2303')
     time.sleep(5)
     pass
 
