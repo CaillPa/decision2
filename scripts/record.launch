@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="decision2" type="time_publisher.py" name="nmea_publisher">
+    </node>
+
+    <node pkg="decision2" type="radar_publisher.py" name="radar_publisher">
+    </node>
+
+    <node pkg="decision2" type="radar_recorder.py" name="radar_recorder">
+    </node>
+
+    <node pkg="decision2" type="video_recorder.py" name="video_recorder">
+    </node>
+</launch>
