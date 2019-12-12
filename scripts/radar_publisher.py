@@ -24,6 +24,19 @@ def run_test(publisher):
         rospy.logdebug('received: '+msg)
         publisher.publish(msg)
         time.sleep(1)
+    
+def run(publisher):
+    # MUST BE TESTED !
+    global ser
+    rospy.logdebug("writing 'G'")
+    ser.write('G')
+    rospy.logdebug("wrote 'G'")
+    ser.readline()
+    while ser.is_open and not rospy.is_shutdown():
+        msg = str(ser.readline()).strip()
+        if msg:
+            rospy.logdebug('received: '+msg)
+            publisher.publish(msg)
 
 def resetUSB():
     rospy.logwarn('resetting radar USB')
@@ -41,7 +54,8 @@ def talker():
             rospy.loginfo("Opening serial connection")
             ser = serial.Serial(DEVICE, baudrate = BAUDRATE, timeout = TIMEOUT)
             rospy.loginfo("Serial connection successful")
-            run_test(pub)
+            #run_test(pub)
+            run(pub)
         except IOError:
             rospy.logerr("IOError, resetting USB")
             resetUSB()

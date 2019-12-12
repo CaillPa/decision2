@@ -5,12 +5,14 @@ import sys
 import rospy
 from std_msgs.msg import String
 
-CAMERA_ADDRESS = 'rtsp://root:toor@192.168.1.120:554/mpeg4/media.amp'
+DEFAULT_CAMERA_ADDRESS = 'rtsp://root:toor@192.168.1.120:554/mpeg4/media.amp'
 VIDEO_FPS = 30
 VIDEO_RES = (640,480)
 REC_DURATION = 1
 TIMESTAMP = ""
 OUTPUT_DIR = "/media/usb/videos/"
+
+CAMERA_ADDRESS = rospy.get_param("/camera_address", DEFAULT_CAMERA_ADDRESS)
 
 def callback(data):
     global TIMESTAMP
@@ -33,6 +35,7 @@ def recorder():
     global TIMESTAMP
     sub = rospy.Subscriber('nmea_time', String, callback)
     rospy.init_node('video_recorder', anonymous=True)
+    rospy.loginfo("Opening camera : " + CAMERA_ADDRESS)
     cap = cv2.VideoCapture(CAMERA_ADDRESS)
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
