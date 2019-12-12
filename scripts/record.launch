@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+    <param name="/camera_address" type="str" value="rtsp://root:toor@192.168.1.120:554/mpeg4/media.amp" />
+
     <node pkg="decision2" type="time_publisher.py" name="nmea_publisher">
     </node>
 
