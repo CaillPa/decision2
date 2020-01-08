@@ -5,10 +5,12 @@ import sys
 import rospy
 from std_msgs.msg import String
 
-DEFAULT_CAMERA_ADDRESS = 'rtsp://root:toor@192.168.1.120:554/mpeg4/media.amp'
+#DEFAULT_CAMERA_ADDRESS = 'rtsp://root:toor@192.168.1.120:554/mpeg4/media.amp'
+DEFAULT_CAMERA_ADDRESS = 'rtsp://admin:cerema76@192.168.1.64:554/mpeg4/media.amp'
+
 VIDEO_FPS = 30
 VIDEO_RES = (640,480)
-REC_DURATION = 1
+REC_DURATION = 60 # duration in minutes
 TIMESTAMP = ""
 OUTPUT_DIR = "/media/usb/videos/"
 
