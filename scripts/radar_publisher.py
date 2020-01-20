@@ -40,7 +40,7 @@ def run(publisher):
 
 def resetUSB():
     rospy.logwarn('resetting radar USB')
-    os.system('echo cerema|sudo -S /home/pi/catkin_ws/src/decision2/misc/reset_usb.py search PL2303')
+    os.system('echo paul|sudo -S /home/pi/catkin_ws/src/decision2/misc/reset_usb.py search PL2303')
     time.sleep(5)
     rospy.logwarn('done resetting radar USB')
     pass

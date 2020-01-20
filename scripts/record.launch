@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <launch>
-    <param name="/camera_address" type="str" value="rtsp://root:toor@192.168.1.120:554/mpeg4/media.amp" />
+    <param name="/camera_address" type="str" value="rtsp://admin:cerema76@192.168.1.64:554/mpeg4/media.amp"/>
+    <param name="/video_directory" type="str" value="/home/paul/Videos/"/>
+    <param name="/video_fps" type="int" value="30"/>
+
 
     <node pkg="decision2" type="time_publisher.py" name="nmea_publisher">
     </node>
