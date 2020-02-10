@@ -25,7 +25,8 @@ def callback(data):
 
 def reset_usb():
     rospy.loginfo('mounting USB drive')
-    #pas bien !
+    #pas bien !pi
+    cere
     os.system('echo paul|sudo -S mount -a')
 
 def draw_text(img, text):
